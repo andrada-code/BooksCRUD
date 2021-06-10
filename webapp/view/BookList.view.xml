@@ -1,0 +1,129 @@
+<mvc:View
+controllerName="org.ubb.books.controller.BookList"
+   xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m">
+
+<Dialog
+      id="addDialog"
+      title="Add a book">
+	  <content>
+
+	  <Label text="ISBN"></Label>
+	  <Input id="isbn"></Input>
+	  <Label text="Title"></Label>
+	  <Input id="title"></Input>
+	  <Label text="Author"></Label>
+	  <Input id="author"></Input>
+	  <Label text="Date Published"></Label>
+	  <DateTimePicker id="datepub" displayFormat="short" valueFormat="yyyy-MM-ddTHH:mm" change="handleChange" class="sapUiSmallMarginBottom"/>
+	  <Label text="Language"></Label>
+	  <Input id="language"></Input>
+	  <Label text="Total number of books"></Label>
+	  <Input id="totalbooks"></Input>
+	  <Label text="Available books"></Label>
+	  <Input id="availablebooks"></Input>
+	  <Button 
+	      text="Close"
+		  press="onCloseAdd"/>
+	  <Button 
+	      text="Add Book"
+		  press="onBookAdd"/>
+	  </content>
+   </Dialog>
+   <Dialog id="updateDialog" title="Update a book">
+   <content>
+      <Label text="ISBN"></Label>
+	  <Input id="isbnUpdate"></Input>
+	  <Label text="Title"></Label>
+	  <Input id="titleUpdate"></Input>
+	  <Label text="Author"></Label>
+	  <Input id="authorUpdate"></Input>
+	  <Label text="Date Published"></Label>
+	  <DateTimePicker id="datepubUpdate" displayFormat="short" valueFormat="yyyy-MM-ddTHH:mm" change="handleChange" class="sapUiSmallMarginBottom"/>
+	  <Label text="Language"></Label>
+	  <Input id="languageUpdate"></Input>
+	  <Label text="Total number of books"></Label>
+	  <Input id="totalbooksUpdate"></Input>
+	  <Label text="Available books"></Label>
+	  <Input id="availablebooksUpdate"></Input>
+	  <Button 
+	      text="Close"
+		  press="onCloseUpdate"/>
+	  <Button 
+	      text="Update Book"
+		  press="onBookUpdate"/>
+   </content>
+   </Dialog>
+
+   <Table id="idBooksTable"
+  
+		items="{
+			path: '/Books',
+			sorter: {
+				path: 'Title'
+			},parameters:{operationMode:'Client'}}"
+		
+		growing="true"  
+		growingThreshold="10"
+		mode="SingleSelect">  <!--binding, OData Model; paginare; cate obiecte pe o pagina-->
+   
+		<headerToolbar>
+		<Toolbar>
+		<content>
+		    <Button 
+			    text="Add"
+				press="onAddBook"/>
+			<Button 
+			    text="Update"
+				press="onUpdateBook"/>
+			<Button 
+			    text="{i18n>Delete}"
+				press="onDeleteBook"/>
+				<ToolbarSpacer/>
+            <SearchField width="30%" search=".onFilterBooks"/>
+		</content>
+		</Toolbar>
+		</headerToolbar>
+	
+		<columns>
+			<Column>
+				<Text text="Title" />
+			</Column>
+			<Column>
+				<Text text="Author" />
+			</Column>
+			<Column>
+				<Text text="Published on" />
+			</Column>
+			<Column>
+				<Text text="Language" />
+			</Column>
+            <Column>
+				<Text text="Available books" />
+			</Column>
+			<Column>
+				<Text text="Total number of books" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<cells>
+					<ObjectIdentifier
+						title="{Title}"
+						text="{Isbn}"/>
+					<Text text="{Author}" />
+					<Text text="{ 
+							path: 'Pdate',
+							type: 'sap.ui.model.type.Date'
+               			}" 
+					/>
+					<Text text="{Language}" />
+					<Text text="{= parseInt(${Tnrbooks}) }" />
+					<Text text="{= parseInt(${Avnrbooks}) }" />
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+   
+</mvc:View>
